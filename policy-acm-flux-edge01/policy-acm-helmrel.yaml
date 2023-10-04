@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata: # kpt-merge: acm/policy-acm
+  name: policy-acm
+  namespace: acm
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'helm.toolkit.fluxcd.io|HelmRelease|acm|policy-acm'
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: ./charts/policy
+      version: '11.0.x'
+      sourceRef:
+        kind: GitRepository
+        name: policy-acm-gitrepo
+        namespace: acm
+      reconcileStrategy: Revision
+      interval: 1m
+  targetNamespace: acm
+  valuesFrom:
+  - kind: ConfigMap
+    name: policy-acm-values
+    valuesKey: values.yaml

@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata: # kpt-merge: acm/policy-acm-gitrepo
+  name: policy-acm-gitrepo
+  namespace: acm
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'source.toolkit.fluxcd.io|GitRepository|acm|policy-acm-gitrepo'
+spec:
+  interval: 10s
+  url: https://github.com/Nordix/nordix-nephio-packages.git
+  ref:
+    branch: master
+  ignore: |
+    # exclude all
+    /*
+    # include charts dir
+    !/charts
